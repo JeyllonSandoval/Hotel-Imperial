@@ -1,11 +1,139 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Hotel Imperial - Inicio">
+	<div class="hero">
+		<div class="container">
+			<h1 class="hero-title">Hotel Imperial</h1>
+			<p class="hero-subtitle">Bienvenido a una experiencia única</p>
+		</div>
+	</div>
+	
+	<div class="color-showcase">
+		<div class="container">
+			<h2>Paleta de Colores</h2>
+			<div class="color-grid">
+				<div class="color-card">
+					<div class="color-swatch bg-primary"></div>
+					<h3>Primario</h3>
+					<p>RGB(236, 171, 15)</p>
+				</div>
+				<div class="color-card">
+					<div class="color-swatch bg-primary-dark"></div>
+					<h3>Primario Oscuro</h3>
+					<p>RGB(110, 78, 0)</p>
+				</div>
+				<div class="color-card">
+					<div class="color-swatch bg-dark"></div>
+					<h3>Fondo</h3>
+					<p>Negro Grafito</p>
+				</div>
+				<div class="color-card">
+					<div class="color-swatch" style="background-color: var(--color-text); border: 1px solid var(--color-gray-medium);"></div>
+					<h3>Texto</h3>
+					<p>Blanco Hueso</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </Layout>
+
+<style>
+	.hero {
+		background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+		color: var(--color-background);
+		padding: 4rem 0;
+		text-align: center;
+	}
+
+	.hero-title {
+		font-size: 3rem;
+		font-weight: 700;
+		margin: 0 0 1rem 0;
+		letter-spacing: -0.02em;
+	}
+
+	.hero-subtitle {
+		font-size: 1.25rem;
+		margin: 0;
+		opacity: 0.9;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	.color-showcase {
+		padding: 4rem 0;
+		background-color: var(--color-background);
+	}
+
+	.color-showcase h2 {
+		text-align: center;
+		margin-bottom: 3rem;
+		color: var(--color-primary);
+		font-size: 2rem;
+	}
+
+	.color-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 2rem;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.color-card {
+		background-color: var(--color-gray-dark);
+		border-radius: 12px;
+		padding: 2rem;
+		text-align: center;
+		transition: transform 0.2s ease;
+	}
+
+	.color-card:hover {
+		transform: translateY(-4px);
+	}
+
+	.color-swatch {
+		width: 100%;
+		height: 120px;
+		border-radius: 8px;
+		margin-bottom: 1rem;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	}
+
+	.color-card h3 {
+		margin: 0 0 0.5rem 0;
+		color: var(--color-text);
+		font-size: 1.25rem;
+	}
+
+	.color-card p {
+		margin: 0;
+		color: var(--color-gray-medium);
+		font-size: 0.9rem;
+	}
+
+	@media (max-width: 768px) {
+		.hero-title {
+			font-size: 2rem;
+		}
+		
+		.hero-subtitle {
+			font-size: 1rem;
+		}
+		
+		.container {
+			padding: 0 1rem;
+		}
+		
+		.color-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+	}
+</style>
