@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { AuthProvider } from '../contexts/AuthContext';
+import { AuthButton } from '../components/AuthButton';
+import { CommentsSection } from '../components/CommentsSection';
+import { StatsDashboard } from '../components/StatsDashboard';
+---
+
+<Layout title="Hotel Imperial - Prueba de Firebase">
+	<div class="test-page">
+		<div class="container">
+			<h1 class="test-title">🧪 Prueba de Firebase</h1>
+			<p class="test-description">
+				Esta página te permite probar la conexión con Firebase y el sistema de comentarios.
+			</p>
+			
+			<div class="test-sections">
+				<!-- Sección de Autenticación -->
+				<div class="test-section">
+					<h2>🔐 Autenticación</h2>
+					<AuthButton client:load />
+				</div>
+				
+				<!-- Dashboard de Estadísticas -->
+				<div class="test-section">
+					<h2>📊 Estadísticas</h2>
+					<AuthProvider client:load>
+						<StatsDashboard client:load />
+					</AuthProvider>
+				</div>
+				
+				<!-- Sistema de Comentarios -->
+				<div class="test-section">
+					<h2>💬 Comentarios</h2>
+					<AuthProvider client:load>
+						<CommentsSection client:load />
+					</AuthProvider>
+				</div>
+			</div>
+			
+			<div class="test-info">
+				<h3>ℹ️ Información de Prueba</h3>
+				<ul>
+					<li>✅ Firebase configurado correctamente</li>
+					<li>✅ Colección "Comments" creada</li>
+					<li>✅ Estructura de datos adaptada</li>
+					<li>✅ Variables de entorno configuradas</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.test-page {
+		min-height: 100vh;
+		background-color: var(--color-background);
+		padding: 2rem 0;
+	}
+	
+	.test-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: var(--color-primary);
+		text-align: center;
+		margin-bottom: 1rem;
+	}
+	
+	.test-description {
+		font-size: 1.2rem;
+		color: var(--color-text);
+		text-align: center;
+		margin-bottom: 3rem;
+		opacity: 0.9;
+	}
+	
+	.test-sections {
+		display: grid;
+		gap: 2rem;
+		margin-bottom: 3rem;
+	}
+	
+	.test-section {
+		background-color: var(--color-gray-dark);
+		border-radius: 12px;
+		padding: 2rem;
+		border: 1px solid var(--color-gray-medium);
+	}
+	
+	.test-section h2 {
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--color-primary);
+		margin-bottom: 1.5rem;
+	}
+	
+	.test-info {
+		background-color: var(--color-gray-dark);
+		border-radius: 12px;
+		padding: 2rem;
+		border-left: 4px solid var(--color-primary);
+	}
+	
+	.test-info h3 {
+		font-size: 1.3rem;
+		font-weight: 600;
+		color: var(--color-primary);
+		margin-bottom: 1rem;
+	}
+	
+	.test-info ul {
+		list-style: none;
+		padding: 0;
+	}
+	
+	.test-info li {
+		padding: 0.5rem 0;
+		color: var(--color-text);
+		font-size: 1.1rem;
+	}
+	
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+	
+	@media (max-width: 768px) {
+		.test-title {
+			font-size: 2rem;
+		}
+		
+		.test-description {
+			font-size: 1rem;
+		}
+		
+		.container {
+			padding: 0 1rem;
+		}
+	}
+</style>
