@@ -1,3 +1,4 @@
+// Declaraciones de tipos para Firebase
 declare module 'firebase/app' {
   export * from '@firebase/app';
 }

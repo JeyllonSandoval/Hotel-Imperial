@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { getComments } from '../lib/firebase';
-import type { Comment } from '../lib/firebase';
+import { getComments } from '../lib/comments';
+import { calculateStats, getRatingPercentage } from '../utils/comments';
+import { formatRating, getRatingLabel } from '../utils/formatters';
+import { StarRating } from '../utils/ui';
+import type { Comment, Stats } from '../types';
+import { db } from '../lib/firebase';
 
 interface StatsDashboardProps {
   hotelId?: string;
 }
 
 export const StatsDashboard: React.FC<StatsDashboardProps> = ({ hotelId }) => {
-  const [stats, setStats] = useState({
+  const [stats, setStats] = useState<Stats>({
     totalComments: 0,
     averageRating: 0,
     ratingDistribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
@@ -20,42 +24,12 @@ export const StatsDashboard: React.FC<StatsDashboardProps> = ({ hotelId }) => {
 
   const loadStats = async () => {
     try {
-      const comments = await getComments(hotelId);
-      const now = new Date();
-      const last24Hours = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-
-      const totalComments = comments.length;
-      const averageRating = totalComments > 0 
-        ? comments.reduce((sum, comment) => sum + (comment.rating || 0), 0) / totalComments
-        : 0;
-
-      const ratingDistribution = comments.reduce((dist, comment) => {
-        const rating = comment.rating || 0;
-        if (rating >= 1 && rating <= 5) {
-          dist[rating as keyof typeof dist]++;
-        }
-        return dist;
-      }, { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 });
-
-      const recentComments = comments.filter(comment => {
-        const commentDate = comment.timestamp.toDate();
-        return commentDate >= last24Hours;
-      }).length;
-
-      setStats({
-        totalComments,
-        averageRating,
-        ratingDistribution,
-        recentComments
-      });
+      const comments = await getComments(db, hotelId);
+      const calculatedStats = calculateStats(comments);
+      setStats(calculatedStats);
     } catch (error) {
       console.error('Error al cargar estadísticas:', error);
     }
-  };
-
-  const getRatingPercentage = (rating: number) => {
-    if (stats.totalComments === 0) return 0;
-    return Math.round((stats.ratingDistribution[rating as keyof typeof stats.ratingDistribution] / stats.totalComments) * 100);
   };
 
   return (
@@ -69,7 +43,7 @@ export const StatsDashboard: React.FC<StatsDashboardProps> = ({ hotelId }) => {
         </div>
         
         <div className="text-center">
-          <div className="text-3xl font-bold text-primary mb-2">{stats.averageRating.toFixed(1)}</div>
+          <div className="text-3xl font-bold text-primary mb-2">{formatRating(stats.averageRating)}</div>
           <div className="text-sm text-gray-medium">Calificación Promedio</div>
         </div>
         
@@ -80,9 +54,7 @@ export const StatsDashboard: React.FC<StatsDashboardProps> = ({ hotelId }) => {
         
         <div className="text-center">
           <div className="text-3xl font-bold text-primary mb-2">
-            {stats.averageRating >= 4.5 ? 'Excelente' : 
-             stats.averageRating >= 4 ? 'Muy Bueno' : 
-             stats.averageRating >= 3 ? 'Bueno' : 'Regular'}
+            {getRatingLabel(stats.averageRating)}
           </div>
           <div className="text-sm text-gray-medium">Estado General</div>
         </div>
@@ -98,11 +70,11 @@ export const StatsDashboard: React.FC<StatsDashboardProps> = ({ hotelId }) => {
               <div className="flex-1 bg-gray-medium rounded-full h-3">
                 <div 
                   className="bg-primary h-3 rounded-full transition-all duration-500"
-                  style={{ width: `${getRatingPercentage(rating)}%` }}
+                  style={{ width: `${getRatingPercentage(stats.ratingDistribution[rating as keyof typeof stats.ratingDistribution], stats.totalComments)}%` }}
                 ></div>
               </div>
               <div className="w-12 text-sm text-gray-medium text-right">
-                {getRatingPercentage(rating)}%
+                {getRatingPercentage(stats.ratingDistribution[rating as keyof typeof stats.ratingDistribution], stats.totalComments)}%
               </div>
             </div>
           ))}

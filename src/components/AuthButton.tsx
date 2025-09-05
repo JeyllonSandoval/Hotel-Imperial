@@ -1,44 +1,30 @@
 import React, { useState } from 'react';
-import { signInWithGoogle, logout } from '../lib/firebase';
+import { signInWithGoogle, logout } from '../lib/auth';
 import { useAuth } from '../hooks/useAuth';
-import { Notification } from './Notification';
+import { useNotification } from '../utils/ui';
+import { auth } from '../lib/firebase';
 
 export const AuthButton: React.FC = () => {
   const { user, loading } = useAuth();
-  const [notification, setNotification] = useState<{
-    type: 'success' | 'error' | 'warning' | 'info';
-    message: string;
-  } | null>(null);
+  const { addNotification, NotificationContainer } = useNotification();
 
   const handleSignIn = async () => {
     try {
-      await signInWithGoogle();
-      setNotification({
-        type: 'success',
-        message: '¡Sesión iniciada correctamente!'
-      });
+      await signInWithGoogle(auth);
+      addNotification('success', '¡Sesión iniciada correctamente!');
     } catch (error: any) {
       console.error('Error al iniciar sesión:', error);
-      setNotification({
-        type: 'error',
-        message: error.message || 'Error al iniciar sesión. Intenta de nuevo.'
-      });
+      addNotification('error', error.message || 'Error al iniciar sesión. Intenta de nuevo.');
     }
   };
 
   const handleSignOut = async () => {
     try {
-      await logout();
-      setNotification({
-        type: 'success',
-        message: 'Sesión cerrada correctamente'
-      });
+      await logout(auth);
+      addNotification('success', 'Sesión cerrada correctamente');
     } catch (error: any) {
       console.error('Error al cerrar sesión:', error);
-      setNotification({
-        type: 'error',
-        message: 'Error al cerrar sesión. Intenta de nuevo.'
-      });
+      addNotification('error', 'Error al cerrar sesión. Intenta de nuevo.');
     }
   };
 
@@ -103,14 +89,7 @@ export const AuthButton: React.FC = () => {
         <span>Iniciar Sesión con Google</span>
       </button>
       
-      {notification && (
-        <Notification
-          type={notification.type}
-          message={notification.message}
-          duration={3000}
-          onClose={() => setNotification(null)}
-        />
-      )}
+      <NotificationContainer />
     </>
   );
 };
