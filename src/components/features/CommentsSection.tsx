@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { addComment, getComments } from '../lib/comments';
-import { filterAndSortComments, calculateStats } from '../utils/comments';
-import { formatRating } from '../utils/formatters';
-import { useAuth } from '../hooks/useAuth';
+import { addComment, getComments } from '@/lib/comments';
+import { filterAndSortComments, calculateStats } from '@/utils/comments';
+import { formatRating } from '@/utils/formatters';
+import { useAuth } from '@/hooks/useAuth';
 import { PermissionError } from './PermissionError';
 import { CommentForm } from './comments/CommentForm';
 import { CommentsHeader } from './comments/CommentsHeader';
 import { CommentsList } from './comments/CommentsList';
-import type { Comment, SortOption, FilterRating } from '../types';
-import { db } from '../lib/firebase';
+import type { Comment, SortOption, FilterRating } from '@/types';
+import { db } from '@/lib/firebase';
 
 interface CommentsSectionProps {
   hotelId?: string;

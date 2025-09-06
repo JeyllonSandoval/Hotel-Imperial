@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { signInWithGoogle, logout } from '../lib/auth';
-import { useAuth } from '../hooks/useAuth';
-import { useNotification } from '../utils/ui';
-import { auth } from '../lib/firebase';
+import { signInWithGoogle, logout } from '@/lib/auth';
+import { useAuth } from '@/hooks/useAuth';
+import { useNotification } from '@/utils/ui';
+import { auth } from '@/lib/firebase';
 
 export const AuthButton: React.FC = () => {
   const { user, loading } = useAuth();

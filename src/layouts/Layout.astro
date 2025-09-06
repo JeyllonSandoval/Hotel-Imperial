@@ -1,4 +1,6 @@
 ---
+import { Navbar } from '@/components/layout/Navbar';
+
 export interface Props {
 	title?: string;
 }
@@ -17,7 +19,8 @@ const { title = "" } = Astro.props;
 		<link rel="stylesheet" href="/src/styles/colors.css" />
 	</head>
 	<body class="m-0 p-0 w-full min-h-screen bg-background text-text">
-		<main class="min-h-screen flex flex-col">
+		<Navbar client:load />
+		<main class="min-h-screen flex flex-col pt-16">
 			<slot />
 		</main>
 	</body>
