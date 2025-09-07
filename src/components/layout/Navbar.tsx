@@ -1,77 +1,131 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthButton } from '@/components/ui/AuthButton';
 
 export const Navbar: React.FC = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Detectar scroll para cambiar el fondo del navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Cerrar menú móvil al hacer clic en un enlace
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Obtener la ruta actual para resaltar el enlace activo
+  const getCurrentPath = () => {
+    if (typeof window !== 'undefined') {
+      return window.location.pathname;
+    }
+    return '/';
+  };
+
+  const currentPath = getCurrentPath();
+
+  const isActive = (path: string) => {
+    return currentPath === path;
+  };
+
+  const navItems = [
+    { href: '/', label: 'Inicio' },
+    { href: '/about', label: 'Reseñas' },
+    { href: '/contact', label: 'Contacto' },
+  ];
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-sm">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled 
+        ? 'bg-background/95 backdrop-blur-md shadow-lg border-b border-primary/20' 
+        : 'bg-transparent backdrop-blur-sm'
+    }`}>
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-16">
-          {/* Zona izquierda - 25% */}
-          <div className="w-1/4 flex justify-start">
-            <a href="/" className="flex items-center">
-              <img
-                src="/src/assets/AMARILLO ecab0f Y BLANCO NullBG.png"
-                alt="Hotel Imperial"
-                className="h-20 w-auto p-2"
-              />
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <a href="/" className="flex items-center group">
+              <div className="overflow-hidden">
+                <img
+                  src="/src/assets/Logo Amarillo.png"
+                  alt="Hotel Imperial"
+                  className="h-20 w-auto p-2 transition-transform duration-300 group-hover:scale-105 transform-gpu"
+                />
+              </div>
             </a>
           </div>
 
-          {/* Zona centro - 50% */}
-          <div className="w-1/2 flex justify-center">
-            <div className="hidden md:block">
-              <div className="flex items-center space-x-8">
+          {/* Navegación desktop */}
+          <div className="hidden md:flex flex-1 justify-center">
+            <div className="flex items-center space-x-1">
+              {navItems.map((item) => (
                 <a
-                  href="/"
-                  className="text-white hover:text-primary transition-colors duration-200 px-3 py-2 text-sm font-medium"
+                  key={item.href}
+                  href={item.href}
+                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg group ${
+                    isActive(item.href)
+                      ? 'text-primary bg-primary/10'
+                      : 'text-white hover:text-primary hover:bg-primary/5'
+                  }`}
                 >
-                  Home
+                  <span className="relative z-10">{item.label}</span>
+                  {isActive(item.href) && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg"></div>
+                  )}
+                  <div className="absolute inset-0 bg-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </a>
-                <a
-                  href="/about"
-                  className="text-white hover:text-primary transition-colors duration-200 px-3 py-2 text-sm font-medium"
-                >
-                  Reseñas
-                </a>
-                <a
-                  href="/contact"
-                  className="text-white hover:text-primary transition-colors duration-200 px-3 py-2 text-sm font-medium"
-                >
-                  Contact
-                </a>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Zona derecha - 25% */}
-          <div className="w-1/4 flex justify-end items-center">
-            <div className="flex items-center space-x-4">
-              <AuthButton />
-            </div>
+          {/* Auth Button y Menú móvil */}
+          <div className="flex items-center space-x-4">
+            <AuthButton />
             
-            {/* Menú móvil */}
-            <div className="md:hidden ml-4">
+            {/* Botón menú móvil */}
+            <div className="md:hidden">
               <button
                 type="button"
-                className="text-white hover:text-primary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-white hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 p-2 rounded-lg transition-all duration-200"
                 aria-controls="mobile-menu"
-                aria-expanded="false"
+                aria-expanded={isMobileMenuOpen}
               >
-                <span className="sr-only">Abrir menú principal</span>
+                <span className="sr-only">
+                  {isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+                </span>
                 <svg
-                  className="block h-6 w-6"
+                  className={`h-6 w-6 transition-transform duration-300 ${
+                    isMobileMenuOpen ? 'rotate-90' : ''
+                  }`}
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
+                  {isMobileMenuOpen ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  )}
                 </svg>
               </button>
             </div>
@@ -79,26 +133,26 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Menú móvil desplegable */}
-        <div className="md:hidden" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background/95 backdrop-blur-sm rounded-lg mt-2">
-            <a
-              href="/"
-              className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-            >
-              Home
-            </a>
-            <a
-              href="/about"
-              className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-            >
-              About
-            </a>
-            <a
-              href="/contact"
-              className="text-white hover:text-primary block px-3 py-2 text-base font-medium"
-            >
-              Contact
-            </a>
+        <div className={`md:hidden transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen 
+            ? 'max-h-96 opacity-100' 
+            : 'max-h-0 opacity-0 overflow-hidden'
+        }`}>
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur-md rounded-lg mt-2 border border-primary/20 shadow-xl">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={closeMobileMenu}
+                className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-200 ${
+                  isActive(item.href)
+                    ? 'text-primary bg-primary/10 border-l-4 border-primary'
+                    : 'text-white hover:text-primary hover:bg-primary/5'
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>

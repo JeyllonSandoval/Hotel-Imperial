@@ -115,7 +115,7 @@ export const AuthButton: React.FC = () => {
     <>
       <button
         onClick={handleSignIn}
-        className="border-2 border-primary text-primary hover:border-4 hover:border-primary-dark px-6 py-2 transition-all duration-200 flex items-center space-x-2 bg-transparent"
+        className="border-2 border-white text-white hover:border-primary hover:text-primary px-6 py-2 transition-colors duration-200 flex items-center space-x-2 bg-transparent"
       >
         <FaGoogle className="w-5 h-5" />
         <span>Iniciar Sesión</span>
