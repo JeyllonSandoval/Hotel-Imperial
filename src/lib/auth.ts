@@ -1,5 +1,5 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
-import type { User } from '../types';
+import type { User } from '@/shared/types';
 
 // Configurar proveedor de Google
 const googleProvider = new GoogleAuthProvider();

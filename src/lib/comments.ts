@@ -1,6 +1,6 @@
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, Timestamp } from 'firebase/firestore';
 import type { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
-import type { Comment } from '../types';
+import type { Comment } from '@/shared/types';
 
 // Funciones de Firestore para comentarios
 export const addComment = async (db: any, comment: Omit<Comment, 'id' | 'timestamp'>) => {

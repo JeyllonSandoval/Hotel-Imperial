@@ -1,58 +1,122 @@
-# Componentes - Hotel Imperial
+# Estructura de Componentes - Hotel Imperial
 
-Esta carpeta contiene todos los componentes reutilizables del proyecto, organizados por categorías para facilitar el mantenimiento y la navegación.
+## 📁 Organización de Archivos
 
-## Estructura de Carpetas
-
-### 📁 `ui/`
-Componentes de interfaz de usuario básicos y reutilizables:
-- `AuthButton.tsx` - Botón de autenticación con Google
-- `PermissionError.tsx` - Componente para mostrar errores de permisos
-
-### 📁 `layout/`
-Componentes relacionados con la estructura y disposición de la página:
-- `Navbar.tsx` - Barra de navegación principal
-
-### 📁 `features/`
-Componentes específicos de funcionalidades del negocio:
-- `CommentsSection.tsx` - Sección principal de comentarios
-- `StatsDashboard.tsx` - Dashboard de estadísticas
-- `comments/` - Subcomponentes del sistema de comentarios:
-  - `CommentForm.tsx` - Formulario para crear comentarios
-  - `CommentItem.tsx` - Item individual de comentario
-  - `CommentsHeader.tsx` - Encabezado de la sección de comentarios
-  - `CommentsList.tsx` - Lista de comentarios
-
-
-## Convenciones
-
-### Nomenclatura
-- Los archivos de componentes usan PascalCase: `ComponentName.tsx`
-- Los archivos de índice usan `index.ts` para exportaciones
-- Los componentes Astro mantienen la extensión `.astro`
-
-### Importaciones
-```typescript
-// Importación individual con alias @
-import { AuthButton } from '@/components/ui/AuthButton';
-
-// Importación desde el índice de categoría
-import { AuthButton, PermissionError } from '@/components/ui';
-
-// Importación desde el índice principal
-import { AuthButton, Navbar, CommentsSection } from '@/components';
+```
+src/components/
+├── sections/           # Componentes de secciones principales
+│   ├── HeroSection.tsx
+│   ├── RoomsSection.tsx
+│   ├── ServicesSection.tsx
+│   └── index.ts
+├── ui/                 # Componentes de interfaz reutilizables
+│   ├── Button.tsx
+│   ├── SectionHeader.tsx
+│   ├── RoomCard.tsx
+│   ├── ServiceCard.tsx
+│   ├── AuthButton.tsx
+│   ├── PermissionError.tsx
+│   └── index.ts
+├── pages/              # Componentes de páginas completas
+│   ├── HomePage.tsx
+│   └── index.ts
+├── layout/             # Componentes de layout
+│   ├── Navbar.tsx
+│   └── index.ts
+└── features/           # Componentes de funcionalidades específicas
+    ├── comments/
+    ├── CommentsSection.tsx
+    ├── StatsDashboard.tsx
+    └── index.ts
 ```
 
-### Estructura de Componentes
-- Cada componente debe tener su propio archivo
-- Los componentes complejos pueden tener subcarpetas con subcomponentes
-- Usar TypeScript para tipado fuerte
-- Seguir las convenciones de React/Astro según corresponda
+## 🧩 Componentes por Categoría
 
-## Beneficios de esta Estructura
+### Secciones (sections/)
+- **HeroSection**: Sección principal con imagen de fondo y call-to-action
+- **RoomsSection**: Muestra las habitaciones disponibles
+- **ServicesSection**: Lista los servicios del hotel
 
-1. **Organización clara**: Fácil localización de componentes por función
-2. **Escalabilidad**: Fácil agregar nuevos componentes sin desorden
-3. **Mantenibilidad**: Separación de responsabilidades
-4. **Reutilización**: Componentes bien organizados y documentados
-5. **Importaciones limpias**: Sistema de índices para importaciones más claras
+### UI Reutilizables (ui/)
+- **Button**: Botón genérico con variantes (primary, secondary, outline)
+- **SectionHeader**: Encabezado estándar para secciones
+- **RoomCard**: Tarjeta individual de habitación
+- **ServiceCard**: Tarjeta individual de servicio
+- **AuthButton**: Botón de autenticación
+- **PermissionError**: Componente de error de permisos
+
+### Páginas (pages/)
+- **HomePage**: Página principal que combina todas las secciones
+
+### Layout (layout/)
+- **Navbar**: Barra de navegación principal
+
+## 📊 Datos (data/)
+```
+src/data/
+├── rooms.ts           # Información de habitaciones
+└── services.ts        # Información de servicios
+```
+
+## 🎯 Principios de Diseño
+
+### 1. **Separación de Responsabilidades**
+- Cada componente tiene una responsabilidad específica
+- Los datos están separados de la lógica de presentación
+- Los componentes UI son reutilizables
+
+### 2. **Composición**
+- Los componentes se componen entre sí
+- HomePage combina HeroSection, RoomsSection y ServicesSection
+- Las secciones usan componentes UI reutilizables
+
+### 3. **Props y Interfaces**
+- Todos los componentes tienen interfaces TypeScript bien definidas
+- Props opcionales con valores por defecto
+- Callbacks para manejar eventos
+
+### 4. **Reutilización**
+- Componentes UI genéricos (Button, SectionHeader)
+- Datos centralizados en archivos separados
+- Estilos consistentes con Tailwind CSS
+
+## 🔧 Uso de Componentes
+
+### Importar un componente:
+```typescript
+import { HeroSection } from '@/components/sections/HeroSection';
+import { Button } from '@/components/ui/Button';
+```
+
+### Usar en Astro:
+```astro
+---
+import { HomePage } from '@/components/pages/HomePage';
+---
+
+<HomePage client:load />
+```
+
+### Pasar props:
+```typescript
+<RoomCard 
+  room={room} 
+  onViewDetails={handleViewDetails}
+/>
+```
+
+## 🎨 Estilos
+
+- **Tailwind CSS** para estilos utilitarios
+- **Variables CSS** personalizadas en `colors.css`
+- **Responsive design** con breakpoints móviles
+- **Animaciones** suaves con transiciones CSS
+- **Tema oscuro** con colores dorados (#ECAB0F)
+
+## 📱 Responsive
+
+Todos los componentes están diseñados para ser responsive:
+- **Mobile First**: Diseño optimizado para móviles
+- **Breakpoints**: sm, md, lg para diferentes tamaños
+- **Grid System**: CSS Grid para layouts flexibles
+- **Flexbox**: Para alineación y distribución

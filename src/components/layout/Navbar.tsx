@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AuthButton } from '@/components/ui/AuthButton';
+import { AuthButton } from '@/components/ui/buttons/AuthButton';
 
 export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -48,7 +48,7 @@ export const Navbar: React.FC = () => {
         : 'bg-transparent backdrop-blur-sm'
     }`}>
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-16">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center group">
@@ -62,8 +62,8 @@ export const Navbar: React.FC = () => {
             </a>
           </div>
 
-          {/* Navegación desktop */}
-          <div className="hidden md:flex flex-1 justify-center">
+          {/* Navegación desktop - Centrada absolutamente */}
+          <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
             <div className="flex items-center space-x-1">
               {navItems.map((item) => (
                 <a

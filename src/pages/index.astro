@@ -1,11 +1,8 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-// import { AuthProvider } from '@/contexts/AuthContext';
-// import { AuthButton } from '@/components/ui/AuthButton';
-// import { CommentsSection } from '@/components/features/CommentsSection';
-// import { StatsDashboard } from '@/components/features/StatsDashboard';
+import { HomePage } from '@/app/pages/HomePage';
 ---
 
-<Layout title="">
-	<!-- Página completamente vacía -->
+<Layout title="Hotel Imperial - Inicio">
+	<HomePage client:load />
 </Layout>
