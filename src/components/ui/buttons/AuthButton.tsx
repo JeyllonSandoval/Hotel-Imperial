@@ -49,7 +49,7 @@ export const AuthButton: React.FC = () => {
     return (
       <div className="flex items-center space-x-2">
         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-        <span className="text-text">Cargando...</span>
+        <span className="text-lg text-white">Cargando...</span>
       </div>
     );
   }
@@ -65,20 +65,20 @@ export const AuthButton: React.FC = () => {
             <img
               src={user.photoURL}
               alt={user.displayName || 'Usuario'}
-              className="w-6 h-6 rounded-full"
+              className="w-8 h-8 rounded-full"
             />
           ) : (
             <FaUser className="w-5 h-5" />
           )}
-          <span className="text-sm">
+          <span className="text-lg">
             {user.displayName || user.email}
           </span>
           <FaChevronDown className={`w-3 h-3 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
         </button>
 
         {isDropdownOpen && (
-          <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg z-50">
-            <div className="py-1">
+          <div className="absolute right-0 mt-2 w-[15rem] rounded-lg shadow-lg z-50 bg-black/50">
+            <div className="py-2">
               <div className="px-4 py-2 text-sm border-b">
                 <div className="text-xs">{user.email}</div>
               </div>
