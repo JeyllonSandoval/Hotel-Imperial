@@ -61,18 +61,23 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="scroll-smooth" style={{ scrollBehavior: 'smooth' }}>
-      <div id="hero-section">
+      {/* Hero Section */}
+      <div id="hero-section" className="relative">
         <HeroSection />
       </div>
-      <div id="about-section">
+      
+      {/* About Section */}
+      <div id="about-section" className="relative">
         <AboutSection />
       </div>
-      <div id="comments-section">
+      
+      {/* Comments Section */}
+      <div id="comments-section" className="relative">
         <CommentsSection />
       </div>
       
       {/* Indicador de sección actual */}
-      <div className="flex flex-col gap-4 fixed right-8 top-1/2 transform -translate-y-1/2 z-50">
+      <div className="flex flex-col gap-4 fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
         {sections.map((_, index) => (
           <button
             key={index}

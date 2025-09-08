@@ -46,8 +46,8 @@ export const HeroSection: React.FC = () => {
       {/* Contenido del hero moderno y elegante */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         {/* Título principal */}
-        <div className="mb-16">
-          <h1 className="text-6xl sm:text-7xl lg:text-8xl text-white leading-none tracking-wider font-light">
+        <div className="mb-12">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-white leading-none tracking-wider font-light">
             <span className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 bg-clip-text text-transparent">
               Hotel León Imperial
             </span>
@@ -55,14 +55,14 @@ export const HeroSection: React.FC = () => {
         </div>
         
         {/* Eslogan */}
-        <div className="mb-24">
-          <p className="text-2xl sm:text-3xl lg:text-4xl text-white/90 font-light tracking-widest uppercase italic">
+        <div className="mb-16">
+          <p className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-white/90 font-light tracking-widest uppercase italic">
             Donde Cada Detalle Cuenta
           </p>
         </div>
 
         {/* Botón de scroll */}
-        <div>
+        <div className="mb-8">
           <button
             onClick={handleScrollToNext}
             className="group flex items-center justify-center mx-auto px-8 py-4 border-2 border-yellow-400 text-yellow-400 rounded-full hover:bg-yellow-400 hover:text-black transition-all duration-300 transform hover:scale-105"
@@ -81,9 +81,9 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Indicador de scroll elegante */}
-      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-10">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
         <div className="elegant-scroll-indicator">
-          <div className="w-px h-16 bg-gradient-to-b from-transparent via-yellow-400/60 to-transparent"></div>
+          <div className="w-px h-12 bg-gradient-to-b from-transparent via-yellow-400/60 to-transparent"></div>
           <div className="w-1 h-1 bg-yellow-400 rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>

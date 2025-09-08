@@ -63,28 +63,28 @@ export const CommentsSection: React.FC = () => {
   return (
     <section 
       ref={sectionRef}
-      className="h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-gray-900"
+      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-gray-dark py-20"
     >
       <div className="max-w-7xl mx-auto w-full">
         {/* Título de la sección */}
-        <div className="text-center mb-16 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out">
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight">
+        <div className="text-center mb-20 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-light text-white mb-8 leading-tight">
             <span className="text-yellow-400">Testimonios</span>
           </h2>
-          <p className="text-xl sm:text-2xl text-gray-300 italic max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl sm:text-2xl text-gray-300 italic max-w-4xl mx-auto leading-relaxed">
             Lo que dicen nuestros huéspedes sobre su experiencia
           </p>
         </div>
 
         {/* Grid de comentarios */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {comments.map((comment, index) => (
             <div
               key={comment.id}
               className="opacity-0 transform translate-y-8 transition-all duration-1000 ease-out"
               style={{ transitionDelay: `${index * 200}ms` }}
             >
-              <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-yellow-400/30 transition-all duration-300 hover:transform hover:scale-105">
+              <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-yellow-400/30 transition-all duration-300 hover:transform hover:scale-105 h-full">
                 {/* Estrellas */}
                 <div className="flex items-center mb-4">
                   {renderStars(comment.rating)}
@@ -116,16 +116,6 @@ export const CommentsSection: React.FC = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Call to action */}
-        <div className="text-center mt-16 opacity-0 transform translate-y-8 transition-all duration-1000 ease-out delay-800">
-          <p className="text-xl text-gray-300 mb-8">
-            ¿Quieres ser parte de nuestra historia?
-          </p>
-          <button className="px-12 py-4 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-semibold rounded-lg hover:from-yellow-500 hover:to-yellow-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-            Reservar Ahora
-          </button>
         </div>
       </div>
 
